@@ -14,7 +14,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'E-shop',
       theme: ThemeData(
+        accentColor: Colors.deepOrange,
         primarySwatch: Colors.blue,
+        fontFamily: 'Lato',
       ),
       home: ProductsOverviewPage(),
     );
