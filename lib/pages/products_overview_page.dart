@@ -7,13 +7,17 @@ class ProductsOverviewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Center(
             child: Text(
           'My e-Store',
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
         )),
       ),
       body: const ProductGrid(),

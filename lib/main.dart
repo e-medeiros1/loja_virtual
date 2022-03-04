@@ -21,9 +21,10 @@ class MyApp extends StatelessWidget {
         title: 'E-shop',
         theme: ThemeData(
           fontFamily: 'Lato',
-  
-        
-          accentColor: Colors.red.shade700,
+          colorScheme: ColorScheme.fromSwatch().copyWith(
+            primary: Colors.yellow.shade50,
+            secondary: Colors.yellow.shade300,
+          ),
         ),
         routes: {
           AppRoutes.PRODUCT_DETAIL: (ctx) => ProductDetailPage(),
