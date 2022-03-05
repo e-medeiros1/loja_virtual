@@ -26,12 +26,18 @@ class ProductItem extends StatelessWidget {
         ),
         footer: GridTileBar(
           backgroundColor: Colors.black54,
-          leading: IconButton(
-              color: Theme.of(context).colorScheme.secondary,
-              onPressed: () {},
-              icon: const Icon(
-                Icons.local_grocery_store_outlined,
-              )),
+          leading: Consumer<Product>(
+            builder: (ctx, product, _) => IconButton(
+                color: Theme.of(context).colorScheme.secondary,
+                onPressed: () {
+                  product.toggleCart();
+                },
+                icon: Icon(
+                  product.isFull
+                      ? Icons.local_grocery_store
+                      : Icons.local_grocery_store_outlined,
+                )),
+          ),
           title: Text(
             product.title,
             textAlign: TextAlign.center,
