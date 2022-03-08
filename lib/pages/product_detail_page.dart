@@ -11,15 +11,26 @@ class ProductDetailPage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black),
+        centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
-        title: Center(
-          child: Text(
-            product.title,
-            style: const TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold),
-          ),
+        title: Text(
+          product.title,
+          style:
+              const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
+      ),
+      body: Column(
+        children: [
+          Center(
+            child: InteractiveViewer(
+                child: Image.network(product.imageUrl, fit: BoxFit.cover)),
+          ),
+          Text(
+            product.description,
+          )
+        ],
       ),
     );
   }
