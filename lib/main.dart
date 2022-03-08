@@ -1,3 +1,4 @@
+import 'package:e_shop/models/cart.dart';
 import 'package:e_shop/models/product_list.dart';
 import 'package:e_shop/others/app_routes.dart';
 import 'package:e_shop/pages/product_detail_page.dart';
@@ -14,8 +15,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) => ProductList(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (_) => ProductList(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => Cart(),
+        ),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'E-shop',
@@ -27,9 +35,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
         routes: {
-          AppRoutes.PRODUCT_DETAIL: (ctx) => ProductDetailPage(),
+          AppRoutes.PRODUCT_DETAIL: (ctx) => const ProductDetailPage(),
         },
-        home: ProductsOverviewPage(),
+        home: const ProductsOverviewPage(),
       ),
     );
   }
