@@ -40,10 +40,11 @@ class Cart with ChangeNotifier {
 
 //Calculate total
   double? get totalAmount {
-     double total = 0.0;
+    double total = 0.0;
     _items.forEach((key, cartItem) {
       total += cartItem.price * cartItem.quantity;
     });
+    return total;
   }
 
 //Count items
