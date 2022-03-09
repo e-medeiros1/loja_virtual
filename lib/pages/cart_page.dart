@@ -1,5 +1,6 @@
 import 'package:e_shop/components/cart_item.dart';
 import 'package:e_shop/models/cart.dart';
+import 'package:e_shop/models/order_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -50,7 +51,11 @@ class CartPage extends StatelessWidget {
                     //     color: Colors.black,
                     //   ),
                     // ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Provider.of<OrderList>(context, listen: false)
+                          .addOrder(cart);
+                      cart.clear();
+                    },
                     child: const Text(
                       'COMPRAR',
                       style: TextStyle(color: Colors.black),
