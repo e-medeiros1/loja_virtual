@@ -11,7 +11,9 @@ class CartPage extends StatelessWidget {
     final Cart cart = Provider.of(context);
     final items = cart.items.values.toList();
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
+        elevation: 0,
         iconTheme: const IconThemeData(color: Colors.black),
         centerTitle: true,
         title: const Text(
@@ -23,7 +25,8 @@ class CartPage extends StatelessWidget {
       body: Column(
         children: [
           Card(
-            margin: const EdgeInsets.all(25),
+            elevation: 3,
+            margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 15),
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Row(
