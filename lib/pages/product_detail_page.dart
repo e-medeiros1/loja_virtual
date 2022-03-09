@@ -21,16 +21,40 @@ class ProductDetailPage extends StatelessWidget {
               const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
       ),
-      body: Column(
-        children: [
-          Center(
-            child: InteractiveViewer(
-                child: Image.network(product.imageUrl, fit: BoxFit.cover)),
-          ),
-          Text(
-            product.description,
-          )
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              height: 300,
+              width: double.infinity,
+              child: InteractiveViewer(
+                child: Image.network(
+                  product.imageUrl,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text(
+              'R\$ ${product.price}',
+              style: const TextStyle(fontSize: 25, color: Colors.black54),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              width: double.infinity,
+              child: Text(
+                product.description,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 17, color: Colors.black),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
