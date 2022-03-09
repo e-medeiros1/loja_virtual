@@ -1,6 +1,7 @@
 import 'package:e_shop/components/badge.dart';
 import 'package:e_shop/components/product_grid.dart';
 import 'package:e_shop/models/cart.dart';
+import 'package:e_shop/others/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,9 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
           Consumer<Cart>(
             child: IconButton(
               padding: const EdgeInsets.only(left: 20),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(AppRoutes.CART);
+              },
               icon: const Icon(
                 Icons.shopping_cart_outlined,
                 color: Colors.black,
