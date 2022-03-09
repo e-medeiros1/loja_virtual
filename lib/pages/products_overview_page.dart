@@ -72,11 +72,12 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
         elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.primary,
         title: const Text(
-          'Minha loja virtual',
+          'Loja virtual',
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
+            fontSize: 23,
           ),
         ),
       ),
