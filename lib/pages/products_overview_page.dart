@@ -1,6 +1,6 @@
+import 'package:e_shop/components/badge.dart';
 import 'package:e_shop/components/product_grid.dart';
-import 'package:e_shop/models/product_list.dart';
-import 'package:e_shop/models/products.dart';
+import 'package:e_shop/models/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,7 +23,24 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
       appBar: AppBar(
         centerTitle: true,
         actions: [
+          //Cart and badge icons
+          Consumer<Cart>(
+            child: IconButton(
+              padding: const EdgeInsets.only(left: 20),
+              onPressed: () {},
+              icon: const Icon(
+                Icons.shopping_cart_outlined,
+                color: Colors.black,
+              ),
+            ),
+            builder: (ctx, cart, child) => Badge(
+              value: cart.itemsCount.toString(),
+              child: child!,
+            ),
+          ),
+          //Options icon
           PopupMenuButton(
+            padding: const EdgeInsets.only(right: 0),
             icon: const Icon(
               Icons.more_vert,
               color: Colors.black,
@@ -47,19 +64,20 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
               }
             },
           ),
+          //Title
         ],
         elevation: 0,
         backgroundColor: Theme.of(context).colorScheme.primary,
-        title: const Center(
-            child: Text(
+        title: const Text(
           'Minha loja virtual',
+          textAlign: TextAlign.center,
           style: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.bold,
           ),
-        )),
+        ),
       ),
-      body:  ProductGrid(showFavoriteOnly: _showFavoriteOnly),
+      body: ProductGrid(showFavoriteOnly: _showFavoriteOnly),
     );
   }
 }
