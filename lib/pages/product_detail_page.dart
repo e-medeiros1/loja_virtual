@@ -9,23 +9,26 @@ class ProductDetailPage extends StatelessWidget {
     final Product product =
         ModalRoute.of(context)?.settings.arguments as Product;
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 0,
         title: Text(
           product.title,
-          style:
-              const TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.secondary,
+            // fontWeight: FontWeight.bold,
+          ),
         ),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              height: 300,
+              height: 500,
               width: double.infinity,
               child: InteractiveViewer(
                 child: Image.network(
@@ -37,22 +40,30 @@ class ProductDetailPage extends StatelessWidget {
             const SizedBox(
               height: 10,
             ),
-            Text(
-              'R\$ ${product.price}',
-              style: const TextStyle(fontSize: 25, color: Colors.black54),
-            ),
-            const SizedBox(
-              height: 10,
-            ),
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10),
               width: double.infinity,
               child: Text(
                 product.description,
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 17, color: Colors.black),
+                style: TextStyle(
+                    fontSize: 20, color: Theme.of(context).colorScheme.primary),
               ),
-            )
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            Chip(
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              label: Text(
+                'R\$ ${product.price}',
+                style: TextStyle(
+                  fontSize: 25,
+                  color: Theme.of(context).colorScheme.secondary,
+                  // backgroundColor: Colors.black,
+                ),
+              ),
+            ),
           ],
         ),
       ),

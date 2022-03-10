@@ -36,8 +36,8 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           fontFamily: 'Lato',
           colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: Colors.white38,
-            secondary: Colors.yellow.shade500,
+            primary: Colors.black,
+            secondary: Colors.white,
             error: Colors.red.shade300,
           ),
         ),

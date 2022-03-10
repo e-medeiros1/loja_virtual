@@ -23,6 +23,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Theme.of(context).colorScheme.primary),
         centerTitle: true,
         actions: [
           //Cart and badge icons
@@ -34,7 +35,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
               },
               icon: const Icon(
                 Icons.shopping_cart_outlined,
-                color: Colors.black,
+                // color: Theme.of(context).colorScheme.primary,
               ),
             ),
             builder: (ctx, cart, child) => Badge(
@@ -45,9 +46,9 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
           //Options icon
           PopupMenuButton(
             padding: const EdgeInsets.only(right: 0),
-            icon: const Icon(
+            icon: Icon(
               Icons.more_vert,
-              color: Colors.black,
+              // color: Theme.of(context).colorScheme.primary,
             ),
             itemBuilder: (_) => [
               const PopupMenuItem(
@@ -71,12 +72,13 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
           //Title
         ],
         elevation: 0,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        title: const Text(
+        //Scaffold Background
+        backgroundColor: Theme.of(context).colorScheme.secondary,
+        title: Text(
           'Loja virtual',
           textAlign: TextAlign.center,
           style: TextStyle(
-            color: Colors.black,
+            color: Theme.of(context).colorScheme.primary,
             fontWeight: FontWeight.bold,
             fontSize: 23,
           ),

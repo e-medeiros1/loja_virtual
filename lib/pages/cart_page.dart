@@ -12,20 +12,30 @@ class CartPage extends StatelessWidget {
     final Cart cart = Provider.of(context);
     final items = cart.items.values.toList();
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       appBar: AppBar(
         elevation: 0,
-        iconTheme: const IconThemeData(color: Colors.black),
+        iconTheme:
+            IconThemeData(color: Theme.of(context).colorScheme.secondary),
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'Carrinho',
           // textAlign: TextAlign.center,
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(
+              color: Theme.of(context).colorScheme.secondary, fontSize: 23),
         ),
       ),
       body: Column(
         children: [
+          Expanded(
+              child: ListView.builder(
+            itemCount: items.length,
+            itemBuilder: (ctx, i) => CartItemWidget(
+              cartItem: items[i],
+            ),
+          )),
           Card(
+            color: Theme.of(context).colorScheme.primary,
             elevation: 3,
             margin: const EdgeInsets.symmetric(vertical: 25, horizontal: 15),
             child: Padding(
@@ -33,12 +43,14 @@ class CartPage extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
+                  Text(
                     'Total: ',
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(
+                        fontSize: 20,
+                        color: Theme.of(context).colorScheme.secondary),
                   ),
                   Chip(
-                      backgroundColor: Theme.of(context).colorScheme.secondary,
+                      backgroundColor: Colors.black12,
                       label: Text(
                         'R\$ ${cart.totalAmount!.toStringAsFixed(2)}',
                         style: const TextStyle(fontWeight: FontWeight.w800),
@@ -56,22 +68,17 @@ class CartPage extends StatelessWidget {
                           .addOrder(cart);
                       cart.clear();
                     },
-                    child: const Text(
+                    child: Text(
                       'COMPRAR',
-                      style: TextStyle(color: Colors.black),
+                      style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary,
+                          fontWeight: FontWeight.bold),
                     ),
                   )
                 ],
               ),
             ),
           ),
-          Expanded(
-              child: ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (ctx, i) => CartItemWidget(
-              cartItem: items[i],
-            ),
-          )),
         ],
       ),
     );
