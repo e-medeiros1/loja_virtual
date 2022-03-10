@@ -1,3 +1,4 @@
+import 'package:e_shop/components/app_drawer.dart';
 import 'package:e_shop/components/badge.dart';
 import 'package:e_shop/components/product_grid.dart';
 import 'package:e_shop/models/cart.dart';
@@ -82,6 +83,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
         ),
       ),
       body: ProductGrid(showFavoriteOnly: _showFavoriteOnly),
+      drawer: const AppDrawer(),
     );
   }
 }
