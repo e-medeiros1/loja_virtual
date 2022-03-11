@@ -11,7 +11,11 @@ class AppDrawer extends StatelessWidget {
       child: Column(
         children: [
           AppBar(
-            title: const Text('Bem vindo, Medeiros'),
+            automaticallyImplyLeading: false,
+            title: const Center(
+                child: Text(
+              'Bem vindo, Medeiros!',
+            )),
           ),
           const Divider(),
           ListTile(
