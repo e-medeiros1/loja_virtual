@@ -4,8 +4,8 @@ import 'package:e_shop/others/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ProductItem extends StatelessWidget {
-  const ProductItem({Key? key}) : super(key: key);
+class ProductGridItem extends StatelessWidget {
+  const ProductGridItem({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +33,22 @@ class ProductItem extends StatelessWidget {
             builder: (ctx, product, _) => IconButton(
                 color: Theme.of(context).colorScheme.secondary,
                 onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: const Text(
+                        'Produto adicionado com sucesso!',
+                        style: TextStyle(color: Colors.black, fontSize: 16),
+                      ),
+                      duration: const Duration(seconds: 2),
+                      backgroundColor: Colors.white,
+                      action: SnackBarAction(
+                          label: 'DESFAZER',
+                          textColor: Colors.black,
+                          onPressed: () {
+                            cart.removeSingleItem(product.id);
+                          }),
+                    ),
+                  );
                   cart.addItem(product);
                 },
                 icon: const Icon(
@@ -42,7 +58,7 @@ class ProductItem extends StatelessWidget {
           title: Text(
             product.title,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 17),
+            style: const TextStyle(fontSize: 17),
           ),
           //Favorite Icon
           trailing: Consumer<Product>(
