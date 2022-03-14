@@ -3,7 +3,6 @@ import 'package:e_shop/models/products.dart';
 import 'package:flutter/cupertino.dart';
 
 class ProductList with ChangeNotifier {
-
 //Retornando a referência da lista de produtos, onde quem tiver acesso ao get pode ter acesso a
 //outras propriedades do método
 //List<Product> get items => _items;
@@ -12,9 +11,12 @@ class ProductList with ChangeNotifier {
   List<Product> _items = dummyProducts;
 
   List<Product> get items => [..._items];
-  List<Product> get favoriteItems => _items.where((prod) => prod.isFavorite).toList();
+  List<Product> get favoriteItems =>
+      _items.where((prod) => prod.isFavorite).toList();
 
-
+  int get itemsCount {
+    return _items.length; 
+  }
 
   void addProduct(Product product) {
     _items.add(product);
