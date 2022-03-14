@@ -1,6 +1,7 @@
 import 'package:e_shop/components/app_drawer.dart';
 import 'package:e_shop/components/product_item.dart';
 import 'package:e_shop/models/product_list.dart';
+import 'package:e_shop/others/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +18,14 @@ class ProductsPage extends StatelessWidget {
           'Gerenciar produtos',
           textAlign: TextAlign.center,
         ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.of(context).pushNamed(AppRoutes.PRODUCTS_FORM);
+            },
+            icon: const Icon(Icons.add),
+          ),
+        ],
       ),
       drawer: const AppDrawer(),
       body: Padding(
