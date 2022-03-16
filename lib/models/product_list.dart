@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:e_shop/data/dummy_data.dart';
 import 'package:e_shop/models/products.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,7 +17,19 @@ class ProductList with ChangeNotifier {
       _items.where((prod) => prod.isFavorite).toList();
 
   int get itemsCount {
-    return _items.length; 
+    return _items.length;
+  }
+
+  void addProductFromData(Map<String, Object> data) {
+    final newProduct = Product(
+      id: Random().nextDouble().toString(),
+      title: data['name'] as String,
+      description: data['description'] as String,
+      price: data['price'] as double,
+      imageUrl: data['imageUrl'] as String,
+    );
+
+    addProduct(newProduct);
   }
 
   void addProduct(Product product) {
