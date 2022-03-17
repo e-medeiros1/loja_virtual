@@ -28,6 +28,28 @@ class _ProductFormPageState extends State<ProductFormPage> {
     _imageUrlFocus.addListener(updateImage);
   }
 
+  //Metódo de ciclo de vida
+  //Capturando dados para mostrar na tela de edição
+  //Adicionar manualmente no textFormField para obter o resultado
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_formData.isEmpty) {
+      final arg = ModalRoute.of(context)?.settings.arguments;
+
+      if (arg != null) {
+        final product = arg as Product;
+        _formData['id'] = product.id;
+        _formData['title'] = product.title;
+        _formData['price'] = product.price;
+        _formData['description'] = product.description;
+        _formData['imageUrl'] = product.imageUrl;
+
+        _imageUrlController.text = product.imageUrl;
+      }
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
@@ -63,8 +85,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
 
     //Temos acesso ao contexto no statefull a partir do momento em que estamos
     //em uma clase State
-    Provider.of<ProductList>(context, listen: false)
-        .addProductFromData(_formData);
+    Provider.of<ProductList>(context, listen: false).saveProduct(_formData);
     Navigator.of(context).pop();
   }
 
@@ -92,6 +113,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
             children: [
               //FormField NOME
               TextFormField(
+                initialValue: _formData['title']?.toString(),
                 decoration: const InputDecoration(
                     labelText: 'Nome', hintText: 'Ex. Camisa'),
                 textInputAction: TextInputAction.next,
@@ -121,6 +143,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
               ),
               //FormField PREÇO
               TextFormField(
+                initialValue: _formData['price']?.toString(),
                 decoration: const InputDecoration(labelText: 'Preço'),
                 textInputAction: TextInputAction.next,
                 focusNode: _priceFocus,
@@ -144,6 +167,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
               ),
               //FormField DESCRIÇÃO
               TextFormField(
+                initialValue: _formData['descriptiond']?.toString(),
                 decoration: const InputDecoration(
                     labelText: 'Descrição', hintText: 'Ex. Camisa listrada'),
                 textInputAction: TextInputAction.next,
