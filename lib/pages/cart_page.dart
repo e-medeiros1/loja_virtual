@@ -27,13 +27,61 @@ class CartPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Expanded(
-              child: ListView.builder(
-            itemCount: items.length,
-            itemBuilder: (ctx, i) => CartItemWidget(
-              cartItem: items[i],
+          Visibility(
+            visible: cart.items.isNotEmpty,
+            replacement: Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Text(
+                    //   'Carrinho',
+                    //   style: context.textTheme.headline6?.copyWith(
+                    //     fontWeight: FontWeight.bold,
+                    //     color: context.theme.primaryColorDark,
+                    //     fontSize: 28,
+                    //   ),
+                    // ),
+                    const SizedBox(
+                      height: 60,
+                    ),
+                    const Center(
+                      child: Text(
+                        'Nenhum item adicionado ao carrinho!',
+                        style: TextStyle(
+                          color: Colors.black,
+                          // fontWeight: FontWeight.w600,
+                          fontSize: 22,
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(vertical: 100),
+                      child: Center(
+                        child: Image.asset(
+                          'assets/images/empty.png',
+                          scale: 3,
+                          // color: Colors.black,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
             ),
-          )),
+            child: Expanded(
+                child: ListView.builder(
+              itemCount: items.length,
+              itemBuilder: (ctx, i) => CartItemWidget(
+                cartItem: items[i],
+              ),
+            )),
+          ),
           Card(
             color: Theme.of(context).colorScheme.primary,
             elevation: 3,
