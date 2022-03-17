@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSwatch().copyWith(
             primary: Colors.black,
             secondary: Colors.white,
-            error: Colors.red.shade300,
+            // error: Colors.red.shade300,
           ),
         ),
         routes: {
