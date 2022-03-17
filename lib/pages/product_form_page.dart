@@ -167,7 +167,7 @@ class _ProductFormPageState extends State<ProductFormPage> {
               ),
               //FormField DESCRIÇÃO
               TextFormField(
-                initialValue: _formData['descriptiond']?.toString(),
+                initialValue: _formData['description']?.toString(),
                 decoration: const InputDecoration(
                     labelText: 'Descrição', hintText: 'Ex. Camisa listrada'),
                 textInputAction: TextInputAction.next,
