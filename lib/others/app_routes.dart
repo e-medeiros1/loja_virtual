@@ -5,4 +5,5 @@ class AppRoutes {
   static const ORDERS = 'orders';
   static const PRODUCTS = 'products';
   static const PRODUCTS_FORM = 'product-form';
+  static const SPLASH = 'splash';
 }

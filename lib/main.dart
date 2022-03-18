@@ -8,6 +8,7 @@ import 'package:e_shop/pages/product_detail_page.dart';
 import 'package:e_shop/pages/product_form_page.dart';
 import 'package:e_shop/pages/products_page.dart';
 import 'package:e_shop/pages/products_overview_page.dart';
+import 'package:e_shop/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -43,13 +44,15 @@ class MyApp extends StatelessWidget {
             // error: Colors.red.shade300,
           ),
         ),
+        initialRoute: AppRoutes.SPLASH,
         routes: {
+          AppRoutes.SPLASH: (ctx) => const SplashPage(),
           AppRoutes.HOME: (ctx) => const ProductsOverviewPage(),
           AppRoutes.PRODUCT_DETAIL: (ctx) => const ProductDetailPage(),
           AppRoutes.CART: (ctx) => const CartPage(),
           AppRoutes.ORDERS: (ctx) => const OrdersPage(),
-          AppRoutes.PRODUCTS: (ctx) => const  ProductsPage(),
-          AppRoutes.PRODUCTS_FORM: (ctx) => const  ProductFormPage()
+          AppRoutes.PRODUCTS: (ctx) => const ProductsPage(),
+          AppRoutes.PRODUCTS_FORM: (ctx) => const ProductFormPage()
         },
       ),
     );
