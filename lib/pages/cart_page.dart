@@ -49,7 +49,7 @@ class CartPage extends StatelessWidget {
                     ),
                     const Center(
                       child: Text(
-                        'Nenhum item adicionado ao carrinho!',
+                        'Oops! O carrinho está vazio',
                         style: TextStyle(
                           color: Colors.black,
                           // fontWeight: FontWeight.w600,
