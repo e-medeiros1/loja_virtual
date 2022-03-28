@@ -8,8 +8,8 @@ import 'package:provider/provider.dart';
 class ProductsPage extends StatelessWidget {
   ProductsPage({Key? key}) : super(key: key);
 
-  Future<void>? _refreshProducts(BuildContext context) {
-    Provider.of<ProductList>(context, listen: false).loadProducts();
+  Future<void> _refreshProducts(BuildContext context) {
+    return Provider.of<ProductList>(context, listen: false).loadProducts();
   }
 
   @override
@@ -33,7 +33,7 @@ class ProductsPage extends StatelessWidget {
       ),
       drawer: const AppDrawer(),
       body: RefreshIndicator(
-        onRefresh: () => _refreshProducts(context)!,
+        onRefresh: () => _refreshProducts(context),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: ListView.builder(
