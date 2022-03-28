@@ -12,12 +12,14 @@
 ### Funcionalidades
 
 - [x] Splash screen
+- [ ] Login
 - [x] Tela inicial
 - [x] Página de detalhes
 - [x] Carrinho
 - [x] Aba de favoritos
 - [x] Cadastro, edição e exclusão de produtos
-- [x] Validação de informações  
+- [x] Validação de informações
+- [x] Integração com firebase   
 
 ### Algumas telas  
 
@@ -28,9 +30,9 @@
 
    ```
    - Clone this repository:
-   $ git clone https://github.com/e-medeiros1/e_shop 
+   $ git clone https://github.com/e-medeiros1/loja_virtual 
    - Enter in directory:
-   $ cd e_shop
+   $ cd loja_virtual
    - For install dependencies:
    $ flutter pub get
    - Run the app: 
