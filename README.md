@@ -30,9 +30,9 @@
 
    ```
    - Clone this repository:
-   $ git clone https://github.com/e-medeiros1/e_shop 
+   $ git clone https://github.com/e-medeiros1/loja_virtual 
    - Enter in directory:
-   $ cd e_shop
+   $ cd loja_virtual
    - For install dependencies:
    $ flutter pub get
    - Run the app: 
