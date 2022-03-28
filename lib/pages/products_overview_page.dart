@@ -2,6 +2,7 @@ import 'package:e_shop/components/app_drawer.dart';
 import 'package:e_shop/components/badge.dart';
 import 'package:e_shop/components/product_grid.dart';
 import 'package:e_shop/models/cart.dart';
+import 'package:e_shop/models/product_list.dart';
 import 'package:e_shop/others/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +18,19 @@ class ProductsOverviewPage extends StatefulWidget {
 
 class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
   bool _showFavoriteOnly = false;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<ProductList>(context, listen: false)
+        .loadProducts()
+        .then((value) {
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +60,7 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
           //Options icon
           PopupMenuButton(
             padding: const EdgeInsets.only(right: 0),
-            icon: Icon(
+            icon: const Icon(
               Icons.more_vert,
               // color: Theme.of(context).colorScheme.primary,
             ),
@@ -84,7 +98,12 @@ class _ProductsOverviewPageState extends State<ProductsOverviewPage> {
           ),
         ),
       ),
-      body: ProductGrid(showFavoriteOnly: _showFavoriteOnly),
+      body: _isLoading
+          ? const Center(
+              child: CircularProgressIndicator(
+              color: Colors.white,
+            ))
+          : ProductGrid(showFavoriteOnly: _showFavoriteOnly),
       drawer: const AppDrawer(),
     );
   }
