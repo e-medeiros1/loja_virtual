@@ -12,12 +12,14 @@
 ### Funcionalidades
 
 - [x] Splash screen
+- [ ] Login
 - [x] Tela inicial
 - [x] Página de detalhes
 - [x] Carrinho
 - [x] Aba de favoritos
 - [x] Cadastro, edição e exclusão de produtos
-- [x] Validação de informações  
+- [x] Validação de informações
+- [x] Integração com firebase   
 
 ### Algumas telas  
 
