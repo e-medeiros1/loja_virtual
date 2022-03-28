@@ -6,7 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductsPage extends StatelessWidget {
-  const ProductsPage({Key? key}) : super(key: key);
+  ProductsPage({Key? key}) : super(key: key);
+
+  Future<void>? _refreshProducts(BuildContext context) {
+    Provider.of<ProductList>(context, listen: false).loadProducts();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,16 +32,19 @@ class ProductsPage extends StatelessWidget {
         ],
       ),
       drawer: const AppDrawer(),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: ListView.builder(
-            itemCount: products.itemsCount,
-            itemBuilder: (ctx, i) => Column(
-                  children: [
-                    ProductItem(product: products.items[i]),
-                    const Divider(),
-                  ],
-                )),
+      body: RefreshIndicator(
+        onRefresh: () => _refreshProducts(context)!,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ListView.builder(
+              itemCount: products.itemsCount,
+              itemBuilder: (ctx, i) => Column(
+                    children: [
+                      ProductItem(product: products.items[i]),
+                      const Divider(),
+                    ],
+                  )),
+        ),
       ),
     );
   }
