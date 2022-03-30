@@ -6,7 +6,7 @@
 <h2 align="center"> App de compras usando Provider! </h2>  
 <h2> Sobre </h2>
 <p >
-  Esse projeto foi desenvolvido no curso da Cod3r para estudo da gerência de estado.
+  Esse projeto foi desenvolvido no curso da Cod3r para estudo da gerência de estado e CRUD.
 </p>  
 
 ### Funcionalidades
