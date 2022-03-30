@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:e_shop/exceptions/http_exceptions.dart';
 import 'package:e_shop/models/products.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 //Retornando a referência da lista de produtos, onde quem tiver acesso ao get pode ter acesso a
@@ -11,8 +13,8 @@ import 'package:http/http.dart' as http;
 
 //Retornando um clone do items(Forma correta)
 class ProductList with ChangeNotifier {
-  final _url =
-      'https://loja-virtual-343de-default-rtdb.firebaseio.com/products.json';
+  final _baseUrl =
+      'https://loja-virtual-343de-default-rtdb.firebaseio.com/products';
   List<Product> _items = [];
 
   List<Product> get items => [..._items];
@@ -23,10 +25,11 @@ class ProductList with ChangeNotifier {
     return _items.length;
   }
 
+  //Carrega produtos
   Future<void> loadProducts() async {
     _items.clear();
 
-    final response = await http.get(Uri.parse(_url));
+    final response = await http.get(Uri.parse('$_baseUrl.json'));
     if (response.body == 'null') return;
     Map<String, dynamic> data = jsonDecode(response.body);
     data.forEach((productId, productData) {
@@ -44,6 +47,7 @@ class ProductList with ChangeNotifier {
     notifyListeners();
   }
 
+  //Salva produtos
   Future<void> saveProduct(Map<String, Object> data) {
     bool hasId = data['id'] != null;
 
@@ -61,10 +65,10 @@ class ProductList with ChangeNotifier {
     }
   }
 
-//Adiciona produto
+  //Adiciona produtos
   Future<void> addProduct(Product product) async {
     //Encode do Json
-    final response = await http.post(Uri.parse(_url),
+    final response = await http.post(Uri.parse('$_baseUrl.json'),
         body: jsonEncode(
           {
             "name": product.title,
@@ -89,11 +93,21 @@ class ProductList with ChangeNotifier {
     //manda o produto novo pro servidor e depois aparece na lista de produtos
   }
 
-  Future<void> updateProduct(Product product) {
+  //Atualiza produtos
+  Future<void> updateProduct(Product product) async {
     //Verifica se o index é válido, caso não encontre, retorna -1, que não é um valor int aceitável
     int index = _items.indexWhere((p) => p.id == product.id);
 
     if (index >= 0) {
+      await http.patch(Uri.parse('$_baseUrl/${product.id}.json'),
+          body: jsonEncode(
+            {
+              "name": product.title,
+              "description": product.description,
+              "price": product.price,
+              "imageUrl": product.imageUrl,
+            },
+          ));
       _items[index] = product;
       notifyListeners();
     }
@@ -101,13 +115,27 @@ class ProductList with ChangeNotifier {
     return Future.value();
   }
 
-  //Método de remoção de produto
-  void removeProduct(Product product) {
+  //Remoção de produtos
+  Future<void> removeProduct(Product product) async {
     int index = _items.indexWhere((p) => p.id == product.id);
 
     if (index >= 0) {
-      _items.removeWhere((p) => p.id == product.id);
+      final product = _items[index];
+      _items.remove(product);
       notifyListeners();
+
+      final response = await http.delete(
+        Uri.parse('$_baseUrl/${product.id}.json'),
+      );
+
+      if (response.statusCode >= 400) {
+        _items.insert(index, product);
+        notifyListeners();
+        throw HttpExceptions(
+          msg: 'Não foi possível excluir o produto.',
+          statusCode: response.statusCode,
+        );
+      }
     }
   }
 }
