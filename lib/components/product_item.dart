@@ -1,3 +1,4 @@
+import 'package:e_shop/exceptions/http_exceptions.dart';
 import 'package:e_shop/models/product_list.dart';
 import 'package:e_shop/models/products.dart';
 import 'package:e_shop/others/app_routes.dart';
@@ -10,6 +11,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final messenger = ScaffoldMessenger.of(context);
     return Dismissible(
       confirmDismiss: (_) {
         return showDialog<bool>(
@@ -29,12 +31,20 @@ class ProductItem extends StatelessWidget {
                         },
                         child: const Text('Ok')),
                   ],
-                )).then((value) {
+                )).then((value) async {
           if (value ?? false) {
-            Provider.of<ProductList>(
-              context,
-              listen: false,
-            ).removeProduct(product);
+            try {
+              await Provider.of<ProductList>(
+                context,
+                listen: false,
+              ).removeProduct(product);
+            } on HttpExceptions catch (error) {
+              messenger.showSnackBar(
+                SnackBar(
+                  content: Text(error.toString()),
+                ),
+              );
+            }
           }
         });
       },
