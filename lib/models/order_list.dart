@@ -18,7 +18,7 @@ class OrderList with ChangeNotifier {
     return _items.length;
   }
 
-  void addOrder(Cart cart) async {
+  Future<void> addOrder(Cart cart) async {
     final date = DateTime.now();
     final response =
         await http.post(Uri.parse('${Constants.ORDER_BASE_URL}.json'),
