@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:e_shop/models/cart.dart';
+import 'package:e_shop/models/cart_item.dart';
 import 'package:e_shop/models/order.dart';
 import 'package:e_shop/others/constants.dart';
 import 'package:flutter/widgets.dart';
@@ -16,6 +17,35 @@ class OrderList with ChangeNotifier {
 
   int get itemsCount {
     return _items.length;
+  }
+
+  //TODO: Implementar o pull to refresh na orders page
+
+  Future<void> loadOrders() async {
+    _items.clear();
+
+    final response =
+        await http.get(Uri.parse('${Constants.ORDER_BASE_URL}.json'));
+    if (response.body == 'null') return;
+    Map<String, dynamic> data = jsonDecode(response.body);
+    data.forEach((orderId, orderData) {
+      _items.add(Order(
+        id: orderId,
+        total: orderData['total'],
+        date: DateTime.parse(orderData['date']),
+        //Convertendo os produtos
+        products: (orderData['products'] as List<dynamic>).map((item) {
+          return CartItem(
+            id: item['id'],
+            productId: item['productId'],
+            name: item['name'],
+            quantity: item['quantity'],
+            price: item['price'],
+          );
+        }).toList(),
+      ));
+    });
+    notifyListeners();
   }
 
   Future<void> addOrder(Cart cart) async {
