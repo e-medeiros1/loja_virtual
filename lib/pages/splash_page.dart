@@ -13,7 +13,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 2)).then(
-      (_) => Navigator.of(context).pushReplacementNamed(AppRoutes.HOME),
+      (_) => Navigator.of(context).pushReplacementNamed(AppRoutes.AUTH),
     );
   }
 

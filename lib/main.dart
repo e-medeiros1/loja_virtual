@@ -2,6 +2,7 @@ import 'package:e_shop/models/cart.dart';
 import 'package:e_shop/models/order_list.dart';
 import 'package:e_shop/models/product_list.dart';
 import 'package:e_shop/others/app_routes.dart';
+import 'package:e_shop/pages/auth_page.dart';
 import 'package:e_shop/pages/cart_page.dart';
 import 'package:e_shop/pages/orders_page.dart';
 import 'package:e_shop/pages/product_detail_page.dart';
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         initialRoute: AppRoutes.SPLASH,
         routes: {
           AppRoutes.SPLASH: (ctx) => const SplashPage(),
+          AppRoutes.AUTH: (ctx) => const AuthPage(),
           AppRoutes.HOME: (ctx) => const ProductsOverviewPage(),
           AppRoutes.PRODUCT_DETAIL: (ctx) => const ProductDetailPage(),
           AppRoutes.CART: (ctx) => const CartPage(),
