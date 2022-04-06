@@ -9,7 +9,7 @@ class AuthPage extends StatelessWidget {
     return Scaffold(
         body: Stack(
       children: const [
-        AuthForm(),
+        SingleChildScrollView(child: AuthForm()),
       ],
     ));
   }

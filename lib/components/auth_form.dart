@@ -1,4 +1,6 @@
+import 'package:e_shop/models/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AuthForm extends StatefulWidget {
   const AuthForm({Key? key}) : super(key: key);
@@ -11,27 +13,55 @@ enum AuthMode { LoginMode, SignupMode }
 
 class _AuthFormState extends State<AuthForm> {
   final _passwordController = TextEditingController();
-  final AuthMode _authMode = AuthMode.LoginMode;
+  AuthMode _authMode = AuthMode.LoginMode;
 
-  Map<String, String> _authData = {
-    'email': '',
-    'password': '',
-  };
+  Map<String, String> _authData = {'email': '', 'password': ''};
+
+  //Form key para obter as informações do formulário
+  final _formKey = GlobalKey<FormState>();
+
+  bool _isLoading = false;
 
   bool _isLogin() => _authMode == AuthMode.LoginMode;
   bool _isSignup() => _authMode == AuthMode.SignupMode;
 
+//TextButton para mudar pra tela de cadastro
   void _switchAuthMode() {
     setState(() {
       if (_isLogin()) {
-        _authMode == AuthMode.SignupMode;
+        _authMode = AuthMode.SignupMode;
       } else {
-        _authMode == AuthMode.LoginMode;
+        _authMode = AuthMode.LoginMode;
       }
     });
   }
 
-  void _submit() {}
+//Método para enviar as informações pro BD
+  Future<void> _submit() async {
+    final isValid = _formKey.currentState?.validate() ?? false;
+
+    if (!isValid) {
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    _formKey.currentState?.save();
+    Auth auth = Provider.of(context, listen: false);
+
+    if (_isLogin()) {
+      //Login
+    } else {
+      //Signup
+      await auth.signup(_authData['email']!, _authData['password']!);
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +77,7 @@ class _AuthFormState extends State<AuthForm> {
         width: deviceSize.width * 1,
         height: 900,
         child: Form(
+          key: _formKey,
           child: Padding(
             padding: const EdgeInsets.all(18),
             child: Column(
@@ -93,6 +124,7 @@ class _AuthFormState extends State<AuthForm> {
                     return null;
                   },
                 ),
+                //Confirma senha
                 if (_isSignup())
                   TextFormField(
                     decoration: const InputDecoration(
@@ -110,19 +142,26 @@ class _AuthFormState extends State<AuthForm> {
                           },
                   ),
                 const SizedBox(height: 30),
-                ElevatedButton(
-                  onPressed: _submit,
-                  child: Text(_isLogin() ? 'ENTRAR' : 'CADASTRAR'),
-                  style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 30,
-                        vertical: 8,
-                      )),
-                ),
+                //Botão de entrar/cadastrar
+                if (_isLoading)
+                  CircularProgressIndicator(
+                    color: Colors.black,
+                  )
+                else
+                  ElevatedButton(
+                    onPressed: _submit,
+                    child: Text(_isLogin() ? 'ENTRAR' : 'CADASTRAR'),
+                    style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 30,
+                          vertical: 8,
+                        )),
+                  ),
                 const Spacer(),
+                //Botão que muda a tela para o signupMode
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
