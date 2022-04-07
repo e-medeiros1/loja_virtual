@@ -1,7 +1,7 @@
 class AppRoutes {
   static const SPLASH = '/';
-  static const AUTH = '/auth';
-  static const HOME = '/home';
+  static const AUTH_OR_HOME = '/auth';
+  // static const HOME = '/home';
   static const PRODUCT_DETAIL = '/product-detail';
   static const CART = '/cart';
   static const ORDERS = 'orders';
