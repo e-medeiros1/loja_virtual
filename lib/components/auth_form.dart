@@ -1,3 +1,4 @@
+import 'package:e_shop/exceptions/auth_exceptions.dart';
 import 'package:e_shop/models/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -51,12 +52,45 @@ class _AuthFormState extends State<AuthForm> {
     _formKey.currentState?.save();
     Auth auth = Provider.of(context, listen: false);
 
-    if (_isLogin()) {
-      //Login
-       await auth.login(_authData['email']!, _authData['password']!);
-    } else {
-      //Signup
-      await auth.signup(_authData['email']!, _authData['password']!);
+    _showErrorDialog(String msg) {
+      showDialog(
+        context: context,
+        builder: (ctx) => AlertDialog(
+          title: const Text(
+            'Ocorreu um erro',
+            style: TextStyle(color: Colors.black),
+          ),
+          content: Text(
+            msg,
+            style: const TextStyle(color: Colors.black),
+          ),
+          actions: [
+            TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  setState(() {
+                    _isLoading = false;
+                  });
+                },
+                child: const Text('OK'))
+          ],
+        ),
+      );
+    }
+
+    try {
+      if (_isLogin()) {
+        //Login
+        await auth.login(_authData['email']!, _authData['password']!);
+      } else {
+        //Signup
+        await auth.signup(_authData['email']!, _authData['password']!);
+      }
+    } on AuthException catch (error) {
+      _showErrorDialog(error.toString());
+    } catch (error) {
+      _showErrorDialog('Ocorreu um erro inesperado');
+      print(error.toString());
     }
 
     setState(() {
@@ -117,6 +151,7 @@ class _AuthFormState extends State<AuthForm> {
                   obscureText: true,
                   controller: _passwordController,
                   onSaved: (password) => _authData['password'] = password ?? '',
+                  
                   validator: (_password) {
                     final password = _password ?? '';
                     if (password.isEmpty || password.length < 5) {
