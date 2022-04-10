@@ -1,3 +1,4 @@
+import 'package:e_shop/models/auth.dart';
 import 'package:e_shop/models/cart.dart';
 import 'package:e_shop/models/products.dart';
 import 'package:e_shop/others/app_routes.dart';
@@ -11,6 +12,7 @@ class ProductGridItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final product = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context, listen: false);
+    final auth = Provider.of<Auth>(context, listen: false);
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: GridTile(
@@ -69,7 +71,7 @@ class ProductGridItem extends StatelessWidget {
               color: Theme.of(context).colorScheme.secondary,
               onPressed: () {
                 if (product.isFavorite == false) {
-                  product.toggleFavorite();
+                  product.toggleFavorite(auth.token ?? '');
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Produto adicionado aos favoritos'),
@@ -77,7 +79,7 @@ class ProductGridItem extends StatelessWidget {
                     ),
                   );
                 } else {
-                  product.toggleFavorite();
+                  product.toggleFavorite(auth.token ?? '');
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Produto removido dos favoritos'),
