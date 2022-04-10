@@ -110,7 +110,7 @@ class _AuthFormState extends State<AuthForm> {
       // color: Colors.white,
       child: SizedBox(
         width: deviceSize.width * 1,
-        height: 900,
+        height: deviceSize.height * 1,
         child: Form(
           key: _formKey,
           child: Padding(
@@ -129,7 +129,7 @@ class _AuthFormState extends State<AuthForm> {
                   decoration: const InputDecoration(
                     label: Text(
                       'E-mail',
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                      // style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                   keyboardType: TextInputType.emailAddress,
@@ -151,7 +151,6 @@ class _AuthFormState extends State<AuthForm> {
                   obscureText: true,
                   controller: _passwordController,
                   onSaved: (password) => _authData['password'] = password ?? '',
-                  
                   validator: (_password) {
                     final password = _password ?? '';
                     if (password.isEmpty || password.length < 5) {
@@ -180,13 +179,13 @@ class _AuthFormState extends State<AuthForm> {
                 const SizedBox(height: 30),
                 //Botão de entrar/cadastrar
                 if (_isLoading)
-                  CircularProgressIndicator(
+                  const CircularProgressIndicator(
                     color: Colors.black,
                   )
                 else
                   ElevatedButton(
                     onPressed: _submit,
-                    child: Text(_isLogin() ? 'ENTRAR' : 'CADASTRAR'),
+                    child: Text(_isLogin() ? 'ENTRAR' : 'CRIAR CONTA'),
                     style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30),
@@ -201,21 +200,19 @@ class _AuthFormState extends State<AuthForm> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (_isLogin())
-                      Text(
-                        _isSignup() ? '' : 'Já possui uma conta? ',
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(fontSize: 15),
+                    const Text(
+                      'Já possui uma conta?',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 15),
+                    ),
+                    TextButton(
+                      onPressed: _switchAuthMode,
+                      child: Text(
+                        _isLogin() ? 'Cadastre-se' : 'Faça o Login',
+                        style: const TextStyle(
+                            fontSize: 15, fontWeight: FontWeight.bold),
                       ),
-                    if (_isLogin())
-                      TextButton(
-                        onPressed: _switchAuthMode,
-                        child: const Text(
-                          'Cadastre-se',
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.bold),
-                        ),
-                      ),
+                    ),
                   ],
                 )
               ],
