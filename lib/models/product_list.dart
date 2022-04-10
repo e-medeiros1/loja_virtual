@@ -1,12 +1,13 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:e_shop/exceptions/http_exceptions.dart';
-import 'package:e_shop/models/products.dart';
-import 'package:e_shop/others/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:e_shop/exceptions/http_exceptions.dart';
+import 'package:e_shop/models/products.dart';
+import 'package:e_shop/others/constants.dart';
 
 //Retornando a referência da lista de produtos, onde quem tiver acesso ao get pode ter acesso a
 //outras propriedades do método
@@ -14,12 +15,15 @@ import 'package:http/http.dart' as http;
 
 //Retornando um clone do items(Forma correta)
 class ProductList with ChangeNotifier {
-
   List<Product> _items = [];
+  final String _token;
 
   List<Product> get items => [..._items];
   List<Product> get favoriteItems =>
       _items.where((prod) => prod.isFavorite).toList();
+
+  //Construtor
+  ProductList(this._items, this._token);
 
   int get itemsCount {
     return _items.length;
@@ -29,7 +33,11 @@ class ProductList with ChangeNotifier {
   Future<void> loadProducts() async {
     _items.clear();
 
-    final response = await http.get(Uri.parse('${Constants.PRODUCT_BASE_URL}.json'));
+    final response =
+        //Aguarda o get da Url + token
+        //É necessário informar pro firebase que você está logado
+        await http
+            .get(Uri.parse('${Constants.PRODUCT_BASE_URL}.json?auth=$_token'));
     if (response.body == 'null') return;
     Map<String, dynamic> data = jsonDecode(response.body);
     data.forEach((productId, productData) {
@@ -68,7 +76,8 @@ class ProductList with ChangeNotifier {
   //Adiciona produtos
   Future<void> addProduct(Product product) async {
     //Encode do Json
-    final response = await http.post(Uri.parse('${Constants.PRODUCT_BASE_URL}.json'),
+    final response = await http.post(
+        Uri.parse('${Constants.PRODUCT_BASE_URL}.json?auth=$_token'),
         body: jsonEncode(
           {
             "name": product.title,
@@ -99,7 +108,9 @@ class ProductList with ChangeNotifier {
     int index = _items.indexWhere((p) => p.id == product.id);
 
     if (index >= 0) {
-      await http.patch(Uri.parse('${Constants.PRODUCT_BASE_URL}/${product.id}.json'),
+      await http.patch(
+          Uri.parse(
+              '${Constants.PRODUCT_BASE_URL}/${product.id}.json?auth=$_token'),
           body: jsonEncode(
             {
               "name": product.title,
@@ -125,7 +136,8 @@ class ProductList with ChangeNotifier {
       notifyListeners();
 
       final response = await http.delete(
-        Uri.parse('${Constants.PRODUCT_BASE_URL}/${product.id}.json'),
+        Uri.parse(
+            '${Constants.PRODUCT_BASE_URL}/${product.id}.json?auth=$_token'),
       );
 
       if (response.statusCode >= 400) {
