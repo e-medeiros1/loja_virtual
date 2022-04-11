@@ -71,7 +71,7 @@ class ProductGridItem extends StatelessWidget {
               color: Theme.of(context).colorScheme.secondary,
               onPressed: () {
                 if (product.isFavorite == false) {
-                  product.toggleFavorite(auth.token ?? '');
+                  product.toggleFavorite(auth.token ?? '', auth.uid ?? '');
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Produto adicionado aos favoritos'),
@@ -79,7 +79,7 @@ class ProductGridItem extends StatelessWidget {
                     ),
                   );
                 } else {
-                  product.toggleFavorite(auth.token ?? '');
+                  product.toggleFavorite(auth.token ?? '', auth.uid ?? '');
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Produto removido dos favoritos'),
