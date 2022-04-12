@@ -15,15 +15,16 @@ import 'package:e_shop/others/constants.dart';
 
 //Retornando um clone do items(Forma correta)
 class ProductList with ChangeNotifier {
-  List<Product> _items = [];
   final String _token;
+  final String _uid;
+  List<Product> _items = [];
 
   List<Product> get items => [..._items];
   List<Product> get favoriteItems =>
       _items.where((prod) => prod.isFavorite).toList();
 
   //Construtor
-  ProductList(this._items, this._token);
+  ProductList(this._token, this._uid, this._items);
 
   int get itemsCount {
     return _items.length;
@@ -39,8 +40,18 @@ class ProductList with ChangeNotifier {
         await http
             .get(Uri.parse('${Constants.PRODUCT_BASE_URL}.json?auth=$_token'));
     if (response.body == 'null') return;
+
+    final favResponse = await http.get(
+      Uri.parse('${Constants.USER_FAVORITES_URL}/$_uid.json?auth=$_token'),
+    );
+
+    Map<String, dynamic> favData =
+        response.body == 'null' ? {} : jsonDecode(favResponse.body);
+
     Map<String, dynamic> data = jsonDecode(response.body);
+
     data.forEach((productId, productData) {
+      final isFavorite = favData[productId];
       _items.add(
         Product(
           id: productId,
@@ -48,7 +59,7 @@ class ProductList with ChangeNotifier {
           description: productData['description'],
           price: productData['price'],
           imageUrl: productData['imageUrl'],
-          // isFavorite: productData['isFavorite'],
+          isFavorite: isFavorite['isFavorite'],
         ),
       );
     });
