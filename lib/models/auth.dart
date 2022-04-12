@@ -59,6 +59,7 @@ class Auth with ChangeNotifier {
       _expireDate = DateTime.now().add(Duration(
         seconds: int.parse(body['expiresIn']),
       ));
+      _autoLogout();
       notifyListeners();
     }
   }
@@ -76,12 +77,18 @@ class Auth with ChangeNotifier {
     _email = null;
     _uid = null;
     _expireDate = null;
+    _clearLogoutTimer();
     notifyListeners();
   }
 
-  
+  void _clearLogoutTimer() {
+    _logoutTime?.cancel();
+    _logoutTime = null;
+  }
 
+//AutoLogout method
   void _autoLogout() {
-    _logoutTime = Timer(Duration(seconds: 3600), logout);
+    final _timeToLogout = _expireDate?.difference(DateTime.now()).inSeconds;
+    _logoutTime = Timer(Duration(seconds: _timeToLogout ?? 0), logout);
   }
 }
