@@ -32,20 +32,22 @@ class MyApp extends StatelessWidget {
         //ProductList depende de Auth
         ChangeNotifierProxyProvider<Auth, ProductList>(
           //Cria o provider recebendo os valores vazios
-          create: (_) => ProductList([], ''),
+          create: (_) => ProductList('', '', []),
           //Atualiza passando os dados para os parâmetros
           update: (ctx, auth, previous) {
             return ProductList(
               //Pega-se a lista de itens também para reaproveitar o provider anterior
-              previous?.items ?? [],
               auth.token ?? '',
+              auth.uid ?? '',
+              previous?.items ?? [],
             );
           },
         ),
         ChangeNotifierProxyProvider<Auth, OrderList>(
-          create: (_) => OrderList('', []),
+          create: (_) => OrderList('', '', []),
           update: (ctx, auth, previous) {
             return OrderList(
+              auth.uid ?? '',
               auth.token ?? '',
               previous?.items ?? [],
             );
