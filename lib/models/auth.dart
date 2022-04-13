@@ -111,7 +111,8 @@ class Auth with ChangeNotifier {
     _uid = null;
     _expireDate = null;
     _clearLogoutTimer();
-    notifyListeners();
+    //Remove dados no user e  notifica os listeners somente quando concluir a limpeza
+    Store.remove('userData').then((_) => notifyListeners());
   }
 
   //Limpa timder de logout
