@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:e_shop/data/store.dart';
 import 'package:e_shop/exceptions/auth_exceptions.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -59,6 +60,15 @@ class Auth with ChangeNotifier {
       _expireDate = DateTime.now().add(Duration(
         seconds: int.parse(body['expiresIn']),
       ));
+
+      //Método pra persistir os dados do usuário
+      Store.saveMap('userData', {
+        'token': _token,
+        'email': _email,
+        'uid': _uid,
+        'expireDate': _expireDate!.toIso8601String(),
+      });
+
       _autoLogout();
       notifyListeners();
     }
@@ -72,6 +82,29 @@ class Auth with ChangeNotifier {
     return _authenticate(email, password, 'signInWithPassword');
   }
 
+  Future<void> tryAutoLogin() async {
+    //Verificando se o user está autenticado
+    if (isAuth) return;
+
+    //Verificando se os dados do user estão vazios
+    final userData = await Store.getMap('userData');
+    if (userData.isEmpty) return;
+
+    //Verificando se a data do token está válida
+    final expireDates = DateTime.parse(userData['expireDate']);
+    if (expireDates.isBefore(DateTime.now())) return;
+
+    //Restaura as informações
+    _token = userData['token'];
+    _email = userData['email'];
+    _uid = userData['uid'];
+    _expireDate = expireDates;
+
+    _autoLogout();
+    notifyListeners();
+  }
+
+  //Método de logout
   void logout() {
     _token = null;
     _email = null;
@@ -81,12 +114,13 @@ class Auth with ChangeNotifier {
     notifyListeners();
   }
 
+  //Limpa timder de logout
   void _clearLogoutTimer() {
     _logoutTime?.cancel();
     _logoutTime = null;
   }
 
-//AutoLogout method
+  //AutoLogout method
   void _autoLogout() {
     final _timeToLogout = _expireDate?.difference(DateTime.now()).inSeconds;
     _logoutTime = Timer(Duration(seconds: _timeToLogout ?? 0), logout);
