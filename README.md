@@ -1,5 +1,5 @@
 <p align="center">
-      <img src="https://user-images.githubusercontent.com/73318684/158922168-0a9cb054-58f0-4255-a89c-ae5f813e24ac.png" width="150" alt="e_shop"/>
+      <img src="https://user-images.githubusercontent.com/73318684/158922168-0a9cb054-58f0-4255-a89c-ae5f813e24ac.png" width="140" alt="e_shop"/>
 </p>
 <h1 </h1>  
 
@@ -12,14 +12,15 @@
 ### Funcionalidades
 
 - [x] Splash screen
-- [ ] Login
+- [x] Login
 - [x] Tela inicial
 - [x] Página de detalhes
 - [x] Carrinho
 - [x] Aba de favoritos
 - [x] Cadastro, edição e exclusão de produtos
 - [x] Validação de informações
-- [x] Integração com firebase   
+- [x] Integração com firebase
+- [ ] Animações   
 
 ### Algumas telas  
 
