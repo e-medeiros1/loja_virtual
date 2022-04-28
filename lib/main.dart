@@ -15,6 +15,8 @@ import 'package:e_shop/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'others/custom_route.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -61,13 +63,16 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'E-shop',
         theme: ThemeData(
-          fontFamily: 'Lato',
-          colorScheme: ColorScheme.fromSwatch().copyWith(
-            primary: Colors.black,
-            secondary: Colors.white,
-            // error: Colors.red.shade300,
-          ),
-        ),
+            fontFamily: 'Lato',
+            colorScheme: ColorScheme.fromSwatch().copyWith(
+              primary: Colors.black,
+              secondary: Colors.white,
+              // error: Colors.red.shade300,
+            ),
+            pageTransitionsTheme: PageTransitionsTheme(builders: {
+              TargetPlatform.android: CustomPageTrasitionBuilder(),
+              TargetPlatform.iOS: CustomPageTrasitionBuilder(),
+            })),
         initialRoute: AppRoutes.SPLASH,
         routes: {
           AppRoutes.SPLASH: (ctx) => const SplashPage(),
