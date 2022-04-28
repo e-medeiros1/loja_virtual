@@ -10,33 +10,62 @@ class ProductDetailPage extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments as Product;
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
-      appBar: AppBar(
-        iconTheme:
-            IconThemeData(color: Theme.of(context).colorScheme.secondary),
-        centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.primary,
-        elevation: 0,
-        title: Text(
-          product.title,
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.secondary,
-            // fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 500,
-              width: double.infinity,
-              child: InteractiveViewer(
-                child: Image.network(
-                  product.imageUrl,
-                  fit: BoxFit.cover,
+      // appBar: AppBar(
+      //   iconTheme:
+      //       IconThemeData(color: Theme.of(context).colorScheme.secondary),
+      //   centerTitle: true,
+      //   backgroundColor: Theme.of(context).colorScheme.primary,
+      //   elevation: 0,
+      //   title: Text(
+      //     product.title,
+      //     style: TextStyle(
+      //       color: Theme.of(context).colorScheme.secondary,
+      //       // fontWeight: FontWeight.bold,
+      //     ),
+      //   ),
+      // ),
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            expandedHeight: 500,
+            pinned: true,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Container(
+                padding: EdgeInsets.only(left: 25),
+                child: Text(
+                  product.title,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  // textAlign: TextAlign.center,
                 ),
               ),
+              background: Stack(
+                fit: StackFit.expand,
+                children: [
+                  Hero(
+                    tag: product.id,
+                    child: Image.network(
+                      product.imageUrl,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  const DecoratedBox(
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color.fromRGBO(0, 0, 0, 0.6),
+                          Color.fromRGBO(0, 0, 0, 0),
+                        ],
+                        begin: Alignment(0, 0.8),
+                        end: Alignment(0, 0),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
+          ),
+          SliverList(
+              delegate: SliverChildListDelegate([
             const SizedBox(
               height: 10,
             ),
@@ -64,8 +93,8 @@ class ProductDetailPage extends StatelessWidget {
                 ),
               ),
             ),
-          ],
-        ),
+          ]))
+        ],
       ),
     );
   }
