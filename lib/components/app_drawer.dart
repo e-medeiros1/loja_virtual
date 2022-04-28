@@ -15,7 +15,7 @@ class AppDrawer extends StatelessWidget {
             automaticallyImplyLeading: false,
             title: const Center(
                 child: Text(
-              'Bem vindo, Medeiros!',
+              'Bem vindo!',
             )),
           ),
           const Divider(),
