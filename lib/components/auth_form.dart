@@ -90,7 +90,6 @@ class _AuthFormState extends State<AuthForm> {
       _showErrorDialog(error.toString());
     } catch (error) {
       _showErrorDialog('Ocorreu um erro inesperado');
-      print(error.toString());
     }
 
     setState(() {
@@ -129,7 +128,6 @@ class _AuthFormState extends State<AuthForm> {
                   decoration: const InputDecoration(
                     label: Text(
                       'E-mail',
-                      // style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                   keyboardType: TextInputType.emailAddress,
@@ -140,7 +138,7 @@ class _AuthFormState extends State<AuthForm> {
                         email.contains('@') ||
                         email.contains('gmail.com') ||
                         email.contains('hotmail.com') ||
-                        email.contains('outlook.com')) ;
+                        email.contains('outlook.com'));
                   },
                 ),
                 //Password formField

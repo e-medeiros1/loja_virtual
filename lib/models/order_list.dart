@@ -22,11 +22,11 @@ class OrderList with ChangeNotifier {
     return _items.length;
   }
 
-  //TODO: Implementar o pull to refresh na orders page
+
 //Carrega os pedidos
   Future<void> loadOrders() async {
     List<Order> items = [];
-    // _items.clear();
+
 
     final response = await http
         .get(Uri.parse('${Constants.ORDER_BASE_URL}/$_uid.json?auth=$_token'));

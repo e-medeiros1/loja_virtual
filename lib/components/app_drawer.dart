@@ -9,7 +9,6 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      // backgroundColor: Colors.white70,
       child: Column(
         children: [
           AppBar(
@@ -21,10 +20,6 @@ class AppDrawer extends StatelessWidget {
           ),
           const Divider(),
           ListTile(
-            // leading: Icon(
-            //   Icons.shop,
-            //   color: Theme.of(context).colorScheme.primary,
-            // ),
             title: Text(
               'Loja',
               textAlign: TextAlign.center,
@@ -41,10 +36,6 @@ class AppDrawer extends StatelessWidget {
           ),
           const Divider(),
           ListTile(
-            // leading: Icon(
-            //   Icons.payment,
-            //   color: Theme.of(context).colorScheme.primary,
-            // ),
             title: Text(
               'Pedidos',
               textAlign: TextAlign.center,
@@ -61,10 +52,6 @@ class AppDrawer extends StatelessWidget {
           ),
           const Divider(),
           ListTile(
-            // leading: Icon(
-            //   Icons.shop,
-            //   color: Theme.of(context).colorScheme.primary,
-            // ),
             title: Text(
               'Gerenciar Produtos',
               textAlign: TextAlign.center,

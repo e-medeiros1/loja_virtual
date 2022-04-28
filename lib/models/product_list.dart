@@ -23,7 +23,7 @@ class ProductList with ChangeNotifier {
   List<Product> get favoriteItems =>
       _items.where((prod) => prod.isFavorite).toList();
 
-  //Construtor
+
   ProductList(this._token, this._uid, this._items);
 
   int get itemsCount {
