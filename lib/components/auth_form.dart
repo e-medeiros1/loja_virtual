@@ -106,7 +106,6 @@ class _AuthFormState extends State<AuthForm> {
         borderRadius: BorderRadius.circular(5),
       ),
       elevation: 8,
-      // color: Colors.white,
       child: SizedBox(
         width: deviceSize.width * 1,
         height: deviceSize.height * 1,
@@ -121,7 +120,6 @@ class _AuthFormState extends State<AuthForm> {
                   'assets/images/logo.png',
                   fit: BoxFit.cover,
                   scale: 2,
-                  // color: Colors.white,
                 ),
                 //E-mail formField
                 TextFormField(
@@ -138,7 +136,7 @@ class _AuthFormState extends State<AuthForm> {
                         email.contains('@') ||
                         email.contains('gmail.com') ||
                         email.contains('hotmail.com') ||
-                        email.contains('outlook.com'));
+                        email.contains('outlook.com')) {}
                   },
                 ),
                 //Password formField
